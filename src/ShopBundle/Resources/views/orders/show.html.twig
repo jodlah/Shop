@@ -1,0 +1,36 @@
+{% extends 'ShopBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Orders</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{% if order.date %}{{ order.date|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Details</th>
+                <td>{{ order.details }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('orders_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('orders_edit', { 'id': order.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

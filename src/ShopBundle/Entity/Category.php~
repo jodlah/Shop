@@ -2,6 +2,7 @@
 
 namespace ShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,17 @@ class Category
      * @ORM\Column(name="name", type="string", length=60)
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Products", mappedBy="category")
+     */
+    private $products;
+
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
 
     /**

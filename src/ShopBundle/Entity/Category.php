@@ -73,4 +73,37 @@ class Category
     {
         return $this->name;
     }
+
+    /**
+     * Add products
+     *
+     * @param \ShopBundle\Entity\Products $products
+     * @return Category
+     */
+    public function addProduct(\ShopBundle\Entity\Products $products)
+    {
+        $this->products[] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \ShopBundle\Entity\Products $products
+     */
+    public function removeProduct(\ShopBundle\Entity\Products $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
 }

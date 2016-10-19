@@ -67,4 +67,27 @@ class Payment
     {
         return $this->type;
     }
+
+    /**
+     * Set orders
+     *
+     * @param \ShopBundle\Entity\Orders $orders
+     * @return Payment
+     */
+    public function setOrders(\ShopBundle\Entity\Orders $orders = null)
+    {
+        $this->orders = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \ShopBundle\Entity\Orders 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

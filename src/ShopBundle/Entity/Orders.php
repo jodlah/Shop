@@ -25,7 +25,7 @@ class Orders
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
@@ -117,5 +117,84 @@ class Orders
     public function getDetails()
     {
         return $this->details;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \ShopBundle\Entity\User $user
+     * @return Orders
+     */
+    public function setUser(\ShopBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \ShopBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \ShopBundle\Entity\Payment $payment
+     * @return Orders
+     */
+    public function setPayment(\ShopBundle\Entity\Payment $payment = null)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \ShopBundle\Entity\Payment 
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    /**
+     * Add products
+     *
+     * @param \ShopBundle\Entity\Products $products
+     * @return Orders
+     */
+    public function addProduct(\ShopBundle\Entity\Products $products)
+    {
+        $this->products[] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \ShopBundle\Entity\Products $products
+     */
+    public function removeProduct(\ShopBundle\Entity\Products $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

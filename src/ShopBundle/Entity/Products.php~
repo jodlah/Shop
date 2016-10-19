@@ -2,6 +2,7 @@
 
 namespace ShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,9 +32,29 @@ class Products
     /**
      * @var int
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="integer")
      */
     private $price;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Orders", mappedBy="products")
+     */
+    private $orders;
+
+    /**
+     * Products constructor.
+     * @internal param $orders
+     */
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
 
     /**

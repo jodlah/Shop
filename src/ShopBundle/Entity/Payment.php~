@@ -28,6 +28,12 @@ class Payment
      */
     private $type;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Orders", inversedBy="payment")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     */
+    private $orders;
+
 
     /**
      * Get id

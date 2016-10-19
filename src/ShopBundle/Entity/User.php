@@ -198,4 +198,37 @@ class User extends BaseUser
     {
         return $this->country;
     }
+
+    /**
+     * Add orders
+     *
+     * @param \ShopBundle\Entity\Orders $orders
+     * @return User
+     */
+    public function addOrder(\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \ShopBundle\Entity\Orders $orders
+     */
+    public function removeOrder(\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

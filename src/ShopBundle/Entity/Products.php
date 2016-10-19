@@ -112,4 +112,60 @@ class Products
     {
         return $this->price;
     }
+
+    /**
+     * Set category
+     *
+     * @param \ShopBundle\Entity\Category $category
+     * @return Products
+     */
+    public function setCategory(\ShopBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \ShopBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \ShopBundle\Entity\Orders $orders
+     * @return Products
+     */
+    public function addOrder(\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \ShopBundle\Entity\Orders $orders
+     */
+    public function removeOrder(\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

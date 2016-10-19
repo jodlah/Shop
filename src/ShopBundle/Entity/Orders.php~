@@ -2,6 +2,7 @@
 
 namespace ShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,7 +25,7 @@ class Orders
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
@@ -34,6 +35,32 @@ class Orders
      * @ORM\Column(name="details", type="string", length=255)
      */
     private $details;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Payment", mappedBy="orders")
+     */
+    private $payment;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Products", inversedBy="orders")
+     * @ORM\JoinTable(name="orders_products")
+     */
+    private $products;
+
+    /**
+     * Orders constructor.
+     * @internal param $products
+     */
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
 
     /**
