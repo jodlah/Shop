@@ -1,7 +1,7 @@
 {% extends 'ShopBundle:shop:base.html.twig' %}
 
 {% block body %}
-    <form action={{ path('show_searched_products') }} method="post">
+    <form action={{ path('show_products') }} method="post">
         <p><input type="text" name="name" placeholder="Search"></p>
         <select name="categories">
                 <option value="">All Categories</option>
@@ -12,6 +12,6 @@
         <input type="submit" value="Search">
     </form>
 
-    {{ render(path('products_all')) }}
+    {#{{ render(path('products_all')) }}#}
 
 {% endblock %}

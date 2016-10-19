@@ -39,9 +39,7 @@ class ProductsController extends Controller
 
         $products = $em->getRepository('ShopBundle:Products')->findAll();
 
-
-
-        return $this->render('ShopBundle:products:showAllProducts.html.twig', array(
+        return $this->render('ShopBundle:products:showProducts.html.twig', array(
             'products' => $products,
         ));
     }
@@ -82,7 +80,7 @@ class ProductsController extends Controller
     {
         $deleteForm = $this->createDeleteForm($product);
 
-        return $this->render('ShopBundle:products:show.html.twig', array(
+        return $this->render('ShopBundle:products:showProductDetails.html.twig', array(
             'product' => $product,
             'delete_form' => $deleteForm->createView(),
         ));

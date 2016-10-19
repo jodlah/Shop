@@ -30,13 +30,6 @@ class Orders
     private $date;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="details", type="string", length=255)
-     */
-    private $details;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -94,29 +87,6 @@ class Orders
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Set details
-     *
-     * @param string $details
-     * @return Orders
-     */
-    public function setDetails($details)
-    {
-        $this->details = $details;
-
-        return $this;
-    }
-
-    /**
-     * Get details
-     *
-     * @return string 
-     */
-    public function getDetails()
-    {
-        return $this->details;
     }
 
     /**
