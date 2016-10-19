@@ -12,4 +12,35 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductsRepository extends EntityRepository
 {
+    public function findProductsByName($name)
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT products 
+            FROM ShopBundle:Products products WHERE
+            products.name LIKE :name'
+        )->setParameter('name', "%$name%");
+
+        $books = $query->getResult();
+
+        return $books;
+    }
+
+    public function findProductsByNameAndCategory($name, $category)
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT products 
+            FROM ShopBundle:Products products 
+            WHERE (products.name LIKE :name) 
+            AND (products.category = :category)'
+        )->setParameter('name', "%$name%")
+        ->setParameter('category', $category);
+
+        $books = $query->getResult();
+
+        return $books;
+    }
 }

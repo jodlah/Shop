@@ -24,11 +24,24 @@ class ProductsController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('ShopBundle:products:index.html.twig');
+    }
+
+    /**
+     * Lists all Products entities.
+     *
+     * @Route("/all", name="products_all")
+     * @Method("GET")
+     */
+    public function showAllAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $products = $em->getRepository('ShopBundle:Products')->findAll();
 
-        return $this->render('ShopBundle:products:index.html.twig', array(
+
+
+        return $this->render('ShopBundle:products:showAllProducts.html.twig', array(
             'products' => $products,
         ));
     }

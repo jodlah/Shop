@@ -1,0 +1,17 @@
+{% extends 'ShopBundle:shop:base.html.twig' %}
+
+{% block body %}
+    <form action={{ path('show_searched_products') }} method="post">
+        <p><input type="text" name="name" placeholder="Search"></p>
+        <select name="categories">
+                <option value="">All Categories</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Search">
+    </form>
+
+    {{ render(path('products_all')) }}
+
+{% endblock %}

@@ -32,7 +32,7 @@ class Products
     /**
      * @var int
      *
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price", type="float", precision=10, scale=2)
      */
     private $price;
 
