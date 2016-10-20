@@ -7,6 +7,7 @@ use ShopBundle\Entity\OrdersProducts;
 use ShopBundle\Entity\Products;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -110,7 +111,7 @@ class ShopController extends Controller
             $found = false;
             //pobieram wszystkie elementy które są w koszyku
             foreach ($cart->getOrdersProducts() as $ordersProduct) {
-                if($ordersProduct->getId() == $id){
+                if($ordersProduct->getProducts()->getId() == $id){
                     $ordersProduct->setCount($ordersProduct->getCount() + 1);
                     $found = true;
                     break;
@@ -126,7 +127,6 @@ class ShopController extends Controller
             }
             $em->flush();
         }
-        //return new Response ("<html><body>gadsf</body></html>");
         return $this->redirectToRoute('products_show', ['id' => $id]);
     }
 
@@ -135,14 +135,18 @@ class ShopController extends Controller
      */
     public function showCartAction(Request $request)
     {
-        $cartId = $this->getCart($request->getSession());
+        $cart = $this->getCart($request->getSession());
 
-        dump($cartId);
+        dump($cart);
+        dump($cart->getOrdersProducts());
 
-        $repository = $this->getDoctrine()->getRepository('ShopBundle:Orders');
+        if (!$cart) {
+            throw new Exception('There is no cart');
+        } else {
+            $cart = $cart->getOrdersProducts();
+        }
 
-
-
-        return new Response("<html><body>Cart</body></html>");
+        return $this->render('ShopBundle:shop:cart.html.twig', array(
+            'cart' => $cart));
     }
 }

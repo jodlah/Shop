@@ -42,22 +42,9 @@ class Products
      */
     private $category;
 
-    /**
-     * @ORM\OneToMany(targetEntity="OrdersProducts", mappedBy="products")
-     */
-    private $ordersProducts;
-
-
     public function __toString()
     {
         return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ordersProducts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

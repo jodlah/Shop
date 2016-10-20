@@ -1,0 +1,22 @@
+{% extends 'ShopBundle:shop:base.html.twig' %}
+
+{% block body %}
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart %}
+            <tr>
+                <td>{{ item.products.name }}</td>
+                <td>{{ item.products.price }}</td>
+                <td>{{ item.count }}</td>
+                <td>{{ item.products.price * item.count }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
