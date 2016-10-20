@@ -3,6 +3,8 @@
 namespace ShopBundle\Controller;
 
 use ShopBundle\Entity\Orders;
+use ShopBundle\Entity\OrdersProducts;
+use ShopBundle\Entity\Products;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,27 +19,28 @@ class ShopController extends Controller
     {
         $orderId = $session->get('cartId');
 
+        dump($orderId);
+
         $repository = $this->getDoctrine()->getRepository('ShopBundle:Orders');
 
         if($orderId) {
             $cart = $repository->find($orderId);
+
+            dump($cart);
         }
-        if(!$orderId || !$cart || $cart->status != 'new') {
+        if(!$orderId || !$cart ) {
             $cart = new Orders();
-            $cart->setDate(date('d/m/Y h:i:s a'));
-            $cart->setUser();
-            $cart->setPayment();
-            $cart->addProduct();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($cart);
-            $em->flush;
+            $em->flush();
 
             $session->set('cartId', $cart->getId());
         }
         return $cart;
     }
 
+    //main page controller
     /**
      * @Route("/main", name="main_page")
      */
@@ -54,6 +57,7 @@ class ShopController extends Controller
         ));
     }
 
+    //search engine
     /**
      * @Route("/showProducts", name="show_products")
      * @Method("POST")
@@ -82,15 +86,63 @@ class ShopController extends Controller
     }
 
     /**
-     * @Route("/addToCart", name="add_product")
+     * @Route("/addToCart/{id}", name="add_product")
      */
-    public function addToCartAction()
+    public function addToCartAction(Request $request, $id)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         } else {
-           $this->getCart();
+
+            $session = $request->getSession();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $repository = $this->getDoctrine()->getRepository('ShopBundle:Products');
+            $productToAdd = $repository->find($id);
+
+            $cart = $this->getCart($session);
+
+            $cart->setDate(new \DateTime());
+            $cart->setUser($this->getUser());
+
+            $found = false;
+            //pobieram wszystkie elementy które są w koszyku
+            foreach ($cart->getOrdersProducts() as $ordersProduct) {
+                if($ordersProduct->getId() == $id){
+                    $ordersProduct->setCount($ordersProduct->getCount() + 1);
+                    $found = true;
+                    break;
+                }
+            }
+            if(!$found) {
+                $ordersProduct = new OrdersProducts();
+                $ordersProduct->setOrder($cart);
+                $ordersProduct->setProducts($productToAdd);
+                $ordersProduct->setCount(1);
+
+                $em->persist($ordersProduct);
+            }
+            $em->flush();
         }
-        return new Response("added");
+        //return new Response ("<html><body>gadsf</body></html>");
+        return $this->redirectToRoute('products_show', ['id' => $id]);
+    }
+
+    /**
+     * @Route("/showCart"), name="show_cart")
+     */
+    public function showCartAction(Request $request)
+    {
+        $cartId = $this->getCart($request->getSession());
+
+        dump($cartId);
+
+        $repository = $this->getDoctrine()->getRepository('ShopBundle:Orders');
+
+
+
+        return new Response("<html><body>Cart</body></html>");
     }
 }

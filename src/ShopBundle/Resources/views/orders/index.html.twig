@@ -17,7 +17,6 @@
             <tr>
                 <td><a href="{{ path('orders_show', { 'id': order.id }) }}">{{ order.id }}</a></td>
                 <td>{% if order.date %}{{ order.date|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ order.details }}</td>
                 <td>
                     <ul>
                         <li>

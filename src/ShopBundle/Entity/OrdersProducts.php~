@@ -1,0 +1,48 @@
+<?php
+
+namespace ShopBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ordersproducts
+ *
+ * @ORM\Table(name="ordersproducts")
+ * @ORM\Entity(repositoryClass="ShopBundle\Repository\ordersProductsRepository")
+ */
+class OrdersProducts
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="count", type="integer")
+     */
+    private $count;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="ordersProducts")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     */
+    private $order;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Products", inversedBy="ordersProducts")
+     * @ORM\JoinColumn(name="products_id", referencedColumnName="id")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+}

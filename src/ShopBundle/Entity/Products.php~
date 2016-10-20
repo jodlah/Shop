@@ -32,7 +32,7 @@ class Products
     /**
      * @var int
      *
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price", type="float", precision=10, scale=2)
      */
     private $price;
 
@@ -43,73 +43,13 @@ class Products
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Orders", mappedBy="products")
+     * @ORM\OneToMany(targetEntity="OrdersProducts", mappedBy="products")
      */
-    private $orders;
-
-    /**
-     * Products constructor.
-     * @internal param $orders
-     */
-    public function __construct()
-    {
-        $this->orders = new ArrayCollection();
-    }
+    private $ordersProducts;
 
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Products
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
+    public function __toString()
     {
         return $this->name;
-    }
-
-    /**
-     * Set price
-     *
-     * @param integer $price
-     * @return Products
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return integer 
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 }

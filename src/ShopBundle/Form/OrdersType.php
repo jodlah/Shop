@@ -16,7 +16,6 @@ class OrdersType extends AbstractType
     {
         $builder
             ->add('date', 'datetime')
-            ->add('details')
             ->add('user')
             ->add('payment')
             ->add('products')

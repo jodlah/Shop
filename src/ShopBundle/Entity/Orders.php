@@ -25,11 +25,12 @@ class Orders
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
     /**
+     * @ORM\Column(nullable=true)
      * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -41,20 +42,14 @@ class Orders
     private $payment;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Products", inversedBy="orders")
-     * @ORM\JoinTable(name="orders_products")
+     * @ORM\OneToMany(targetEntity="OrdersProducts", mappedBy="order")
      */
-    private $products;
+    private $ordersProducts;
 
-    /**
-     * Orders constructor.
-     * @internal param $products
-     */
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->ordersProducts = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -92,10 +87,10 @@ class Orders
     /**
      * Set user
      *
-     * @param \ShopBundle\Entity\User $user
+     * @param string $user
      * @return Orders
      */
-    public function setUser(\ShopBundle\Entity\User $user = null)
+    public function setUser($user)
     {
         $this->user = $user;
 
@@ -105,7 +100,7 @@ class Orders
     /**
      * Get user
      *
-     * @return \ShopBundle\Entity\User 
+     * @return string 
      */
     public function getUser()
     {
@@ -136,35 +131,35 @@ class Orders
     }
 
     /**
-     * Add products
+     * Add ordersProducts
      *
-     * @param \ShopBundle\Entity\Products $products
+     * @param \ShopBundle\Entity\OrdersProducts $ordersProducts
      * @return Orders
      */
-    public function addProduct(\ShopBundle\Entity\Products $products)
+    public function addOrdersProduct(\ShopBundle\Entity\OrdersProducts $ordersProducts)
     {
-        $this->products[] = $products;
+        $this->ordersProducts[] = $ordersProducts;
 
         return $this;
     }
 
     /**
-     * Remove products
+     * Remove ordersProducts
      *
-     * @param \ShopBundle\Entity\Products $products
+     * @param \ShopBundle\Entity\OrdersProducts $ordersProducts
      */
-    public function removeProduct(\ShopBundle\Entity\Products $products)
+    public function removeOrdersProduct(\ShopBundle\Entity\OrdersProducts $ordersProducts)
     {
-        $this->products->removeElement($products);
+        $this->ordersProducts->removeElement($ordersProducts);
     }
 
     /**
-     * Get products
+     * Get ordersProducts
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProducts()
+    public function getOrdersProducts()
     {
-        return $this->products;
+        return $this->ordersProducts;
     }
 }

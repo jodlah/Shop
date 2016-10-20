@@ -22,7 +22,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('add_product') }}">Add to cart</a>
+            <a href="{{ path('add_product', { 'id': product.id }) }}">Add to cart</a>
         </li>
         <li>
             <a href="{{ path('products_index') }}">Back to the list</a>

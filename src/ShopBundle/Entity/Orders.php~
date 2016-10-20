@@ -25,18 +25,12 @@ class Orders
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="details", type="string", length=255)
-     */
-    private $details;
-
-    /**
+     * @ORM\Column(nullable=true)
      * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -48,74 +42,12 @@ class Orders
     private $payment;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Products", inversedBy="orders")
-     * @ORM\JoinTable(name="orders_products")
+     * @ORM\OneToMany(targetEntity="OrdersProducts", mappedBy="order")
      */
-    private $products;
+    private $ordersProducts;
 
-    /**
-     * Orders constructor.
-     * @internal param $products
-     */
     public function __construct()
     {
-        $this->products = new ArrayCollection();
-    }
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Orders
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set details
-     *
-     * @param string $details
-     * @return Orders
-     */
-    public function setDetails($details)
-    {
-        $this->details = $details;
-
-        return $this;
-    }
-
-    /**
-     * Get details
-     *
-     * @return string 
-     */
-    public function getDetails()
-    {
-        return $this->details;
+        $this->ordersProducts = new ArrayCollection();
     }
 }

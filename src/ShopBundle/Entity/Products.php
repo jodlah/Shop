@@ -43,19 +43,22 @@ class Products
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Orders", mappedBy="products")
+     * @ORM\OneToMany(targetEntity="OrdersProducts", mappedBy="products")
      */
-    private $orders;
+    private $ordersProducts;
 
+
+    public function __toString()
+    {
+        return $this->name;
+    }
     /**
-     * Products constructor.
-     * @internal param $orders
+     * Constructor
      */
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->ordersProducts = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -93,7 +96,7 @@ class Products
     /**
      * Set price
      *
-     * @param integer $price
+     * @param float $price
      * @return Products
      */
     public function setPrice($price)
@@ -106,7 +109,7 @@ class Products
     /**
      * Get price
      *
-     * @return integer 
+     * @return float 
      */
     public function getPrice()
     {
@@ -137,35 +140,35 @@ class Products
     }
 
     /**
-     * Add orders
+     * Add ordersProducts
      *
-     * @param \ShopBundle\Entity\Orders $orders
+     * @param \ShopBundle\Entity\OrdersProducts $ordersProducts
      * @return Products
      */
-    public function addOrder(\ShopBundle\Entity\Orders $orders)
+    public function addOrdersProduct(\ShopBundle\Entity\OrdersProducts $ordersProducts)
     {
-        $this->orders[] = $orders;
+        $this->ordersProducts[] = $ordersProducts;
 
         return $this;
     }
 
     /**
-     * Remove orders
+     * Remove ordersProducts
      *
-     * @param \ShopBundle\Entity\Orders $orders
+     * @param \ShopBundle\Entity\OrdersProducts $ordersProducts
      */
-    public function removeOrder(\ShopBundle\Entity\Orders $orders)
+    public function removeOrdersProduct(\ShopBundle\Entity\OrdersProducts $ordersProducts)
     {
-        $this->orders->removeElement($orders);
+        $this->ordersProducts->removeElement($ordersProducts);
     }
 
     /**
-     * Get orders
+     * Get ordersProducts
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getOrders()
+    public function getOrdersProducts()
     {
-        return $this->orders;
+        return $this->ordersProducts;
     }
 }
