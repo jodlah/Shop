@@ -6,6 +6,7 @@
         <thead>
             <tr>
                 <th scope="row">Id</th>
+                <th scope="row">Category</th>
                 <th scope="row">Name</th>
                 <th scope="row">Price</th>
                 <th scope="row">Actions</th>
@@ -14,11 +15,12 @@
         <tbody>
         {% for product in products %}
             <tr>
-                <td><a href="{{ path('products_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+                <td>{{ product.id }}</a></td>
+                <td>{{ product.category }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
+                <td>{{ product.price|number_format(2) }}</td>
                 <td>
-                    <a class="btn btn-success" href="{{ path('products_show', { 'id': product.id }) }}">BUY</a>
+                    <a class="btn btn-success" href="{{ path('products_show', { 'id': product.id }) }}">SHOW</a>
                 </td>
             </tr>
         {% endfor %}

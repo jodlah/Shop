@@ -34,6 +34,11 @@ class Payment
      */
     private $orders;
 
+    public function __toString()
+    {
+        return $this->type;
+    }
+
 
     /**
      * Get id

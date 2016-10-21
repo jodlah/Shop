@@ -48,8 +48,6 @@ class ShopController extends Controller
 
         $categories = $repository->findAll();
 
-        dump($categories);
-
         return $this->render('ShopBundle:shop:main.html.twig', array(
             'categories' => $categories
         ));
@@ -153,5 +151,13 @@ class ShopController extends Controller
             'cartItem' => $cartItem,
             'sum' => $sum
         ));
+    }
+
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function homePageAction()
+    {
+        return $this->redirectToRoute('main_page');
     }
 }

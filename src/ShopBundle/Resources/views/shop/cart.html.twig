@@ -6,6 +6,7 @@
             <thead>
             <tr>
                 <th scope="row">Date</th>
+                <th scope="row">Category</th>
                 <th scope="row">Name</th>
                 <th scope="row">Price</th>
                 <th scope="row">Quantity</th>
@@ -16,15 +17,16 @@
             {% for item in cartItem %}
                 <tr>
                     <td>{{ item.order.date|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ item.products.category }}</td>
                     <td>{{ item.products.name }}</td>
-                    <td>{{ item.products.price }}</td>
+                    <td>{{ item.products.price|number_format(2) }}</td>
                     <td>{{ item.count }}</td>
                     <td>{{ item.products.price * item.count }}</td>
                 </tr>
             {% endfor %}
                 <tr>
-                    <td colspan="4" style="border-top:solid black">Total</td>
-                    <td style="border-top:solid black">{{ sum }}</td>
+                    <td colspan="5" style="border-top:solid black">Total</td>
+                    <td style="border-top:solid black">{{ sum|number_format(2) }}</td>
                 </tr>
             </tbody>
         </table>

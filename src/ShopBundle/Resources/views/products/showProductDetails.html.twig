@@ -9,19 +9,16 @@
         <th>Price</th>
             <tr>
                 <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
+                <td>{{ product.price|number_format(2) }}</td>
             </tr>
         </tbody>
     </table>
             <a class="btn btn-primary" href="{{ path('add_product', { 'id': product.id }) }}">Add to cart</a>
             <a class="btn btn-info" href="{{ path('products_index') }}">Back to the list</a><br><br>
-
         <div>
-            <p>Admin functions:</p>
             {% if is_granted('ROLE_ADMIN') %}
-
+            <p>Admin functions:</p>
                 <a class="btn btn-warning" href="{{ path('products_edit', { 'id': product.id }) }}">Edit</a>
-
                 {{ form_start(delete_form) }}
                     <input class="btn btn-danger" type="submit" value="Delete">
                 {{ form_end(delete_form) }}

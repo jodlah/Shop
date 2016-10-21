@@ -51,6 +51,11 @@ class Orders
         $this->ordersProducts = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->payment;
+    }
+
     /**
      * Get id
      *
