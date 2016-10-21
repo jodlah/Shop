@@ -1,41 +1,31 @@
 {% extends 'ShopBundle:shop:base.html.twig' %}
 
 {% block body %}
-    <h1>Products</h1>
-
-    <table>
+<div class="container">
+    <h1>{{ product.name }}</h1>
+    <table class="table table-striped">
         <tbody>
+        <th>Name</th>
+        <th>Price</th>
             <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
                 <td>{{ product.name }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
                 <td>{{ product.price }}</td>
             </tr>
         </tbody>
     </table>
+            <a class="btn btn-primary" href="{{ path('add_product', { 'id': product.id }) }}">Add to cart</a>
+            <a class="btn btn-info" href="{{ path('products_index') }}">Back to the list</a><br><br>
 
-    <ul>
-        <li>
-            <a href="{{ path('add_product', { 'id': product.id }) }}">Add to cart</a>
-        </li>
-        <li>
-            <a href="{{ path('products_index') }}">Back to the list</a>
-        </li>
-        {% if is_granted('ROLE_ADMIN') %}
-        <li>
-            <a href="{{ path('products_edit', { 'id': product.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-        {% endif %}
-    </ul>
+        <div>
+            <p>Admin functions:</p>
+            {% if is_granted('ROLE_ADMIN') %}
+
+                <a class="btn btn-warning" href="{{ path('products_edit', { 'id': product.id }) }}">Edit</a>
+
+                {{ form_start(delete_form) }}
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                {{ form_end(delete_form) }}
+            {% endif %}
+        </div>
+</div>
 {% endblock %}

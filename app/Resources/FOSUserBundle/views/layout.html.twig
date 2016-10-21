@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
-        <div>
+{% extends 'ShopBundle:shop:base.html.twig' %}
+{% block body %}
+        <div class="wrapper">
+            <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}">
+                <h4>
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a class="btn btn-default" href="{{ path('fos_user_security_logout') }}">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a>
+                </h4>
             {% else %}
                 <a href="{{ path('fos_user_security_login') }}">{{ 'Form'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
+            </div>
         </div>
 
         {% if app.request.hasPreviousSession %}
@@ -29,5 +29,7 @@
             {% block fos_user_content %}
             {% endblock fos_user_content %}
         </div>
-    </body>
-</html>
+
+
+{% endblock %}
+

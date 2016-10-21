@@ -1,38 +1,30 @@
 {% extends 'ShopBundle:shop:base.html.twig' %}
 
 {% block body %}
-<table>
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for product in products %}
-        <tr>
-            <td><a href="{{ path('products_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('products_show', { 'id': product.id }) }}">show</a>
-                    </li>
-
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <li>
-                        <a href="{{ path('products_edit', { 'id': product.id }) }}">edit</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="row">Id</th>
+                <th scope="row">Name</th>
+                <th scope="row">Price</th>
+                <th scope="row">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td><a href="{{ path('products_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                    <a class="btn btn-success" href="{{ path('products_show', { 'id': product.id }) }}">BUY</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
 
 

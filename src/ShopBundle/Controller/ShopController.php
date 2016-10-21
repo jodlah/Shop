@@ -20,14 +20,11 @@ class ShopController extends Controller
     {
         $orderId = $session->get('cartId');
 
-        dump($orderId);
-
         $repository = $this->getDoctrine()->getRepository('ShopBundle:Orders');
 
         if($orderId) {
             $cart = $repository->find($orderId);
 
-            dump($cart);
         }
         if(!$orderId || !$cart ) {
             $cart = new Orders();
@@ -137,16 +134,24 @@ class ShopController extends Controller
     {
         $cart = $this->getCart($request->getSession());
 
-        dump($cart);
-        dump($cart->getOrdersProducts());
-
         if (!$cart) {
             throw new Exception('There is no cart');
         } else {
-            $cart = $cart->getOrdersProducts();
+            $cartItem = $cart->getOrdersProducts();
+        }
+
+        $sum = 0;
+
+        foreach ($cart->getOrdersProducts() as $ordersProduct) {
+            $price = $ordersProduct->getProducts()->getPrice();
+            $count = $ordersProduct->getCount();
+            $amount = ($price * $count);
+            $sum +=$amount;
         }
 
         return $this->render('ShopBundle:shop:cart.html.twig', array(
-            'cart' => $cart));
+            'cartItem' => $cartItem,
+            'sum' => $sum
+        ));
     }
 }

@@ -60,6 +60,34 @@ class UserController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing User entity.
+     *
+     * @Route("/edit", name="user_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request)
+    {
+        $user = $this->getUser();
+        $deleteForm = $this->createDeleteForm($user);
+        $editForm = $this->createForm('ShopBundle\Form\UserType', $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('user_edit');
+        }
+
+        return $this->render('ShopBundle:user:edit.html.twig', array(
+            'user' => $user,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
      * Finds and displays a User entity.
      *
      * @Route("/{id}", name="user_show")
@@ -71,33 +99,6 @@ class UserController extends Controller
 
         return $this->render('ShopBundle:user:show.html.twig', array(
             'user' => $user,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing User entity.
-     *
-     * @Route("/{id}/edit", name="user_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, User $user)
-    {
-        $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('ShopBundle\Form\UserType', $user);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
-        }
-
-        return $this->render('ShopBundle:user:edit.html.twig', array(
-            'user' => $user,
-            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

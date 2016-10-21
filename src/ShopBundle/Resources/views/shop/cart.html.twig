@@ -1,22 +1,32 @@
 {% extends 'ShopBundle:shop:base.html.twig' %}
 
 {% block body %}
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in cart %}
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>{{ item.products.name }}</td>
-                <td>{{ item.products.price }}</td>
-                <td>{{ item.count }}</td>
-                <td>{{ item.products.price * item.count }}</td>
+                <th scope="row">Date</th>
+                <th scope="row">Name</th>
+                <th scope="row">Price</th>
+                <th scope="row">Quantity</th>
+                <th scope="row">Value</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for item in cartItem %}
+                <tr>
+                    <td>{{ item.order.date|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ item.products.name }}</td>
+                    <td>{{ item.products.price }}</td>
+                    <td>{{ item.count }}</td>
+                    <td>{{ item.products.price * item.count }}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td colspan="4" style="border-top:solid black">Total</td>
+                    <td style="border-top:solid black">{{ sum }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
